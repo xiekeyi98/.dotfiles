@@ -1,0 +1,166 @@
+"set nocompatible "取消和vi的兼容，避免以前的bug和功能
+"autocmd GUIEnter * simalt ~x "GVIM函数，启动GUI后自动全屏
+"set guifont=Fixedsys:h16:cGB2312:qDRAFT "设置字号
+"set backspace=indent,eol,start "GVIM设置，否则退格键有问题。
+"为了兼容VI，所以backspace有好几种模式
+" indent: 表示可以删除自动缩进的部分.
+" eol: 表示在行尾可以合并两行
+" start:表示可以删除之前的输入
+" -------- GVIM ------ 
+set nocompatible "取消和vi的兼容，避免以前的bug和功能
+syntax on "开启代码高亮
+set number "设置行号
+set relativenumber "设置相对行号
+set showcmd "右下角显示输入命令
+set ruler "显示当前行
+set autoindent "自动缩进
+set noeb "禁止响铃
+set tabstop=2 "设置tab 四个格"
+set expandtab "设 tab 用空格代替"
+set shiftwidth=2 "设置每层缩进数"
+set hlsearch "设置搜索高亮
+colorscheme desert "颜色方案
+
+" %表示当前文件名 %:p表示当前文件完整路径
+" %:p:r表示当前文件名完整路径并去除后缀名
+" %< 表示当前文件名
+"GCC编译函数
+func! CompileGcc()
+  exec "w"
+  let compilecmd="!gcc "
+  let compileflag="-g -Wall  -o %:r"
+  if search("mpi\.h") != 0
+    let compilecmd = "!mpicc "
+  endif
+  if search("glut\.h") != 0
+    let compileflag .= " -lglut -lGLU -lGL "
+  endif
+  if search("cv\.h") != 0
+    let compileflag .= " -lcv -lhighgui -lcvaux "
+  endif
+  if search("omp\.h") != 0
+    let compileflag .= " -fopenmp "
+  endif
+  if search("math\.h") != 0
+    let compileflag .= " -lm "
+  endif
+  exec compilecmd." % ".compileflag
+endfunc
+
+"G++编译函数
+func! CompileGpp()
+  exec "w"
+  let compilecmd="!g++ "
+  let compileflag="-g -Wall -std=gnu++11  -o %:r "
+  if search("mpi\.h") != 0
+    let compilecmd = "!mpic++ "
+  endif
+  if search("glut\.h") != 0
+    let compileflag .= " -lglut -lGLU -lGL "
+  endif
+  if search("cv\.h") != 0
+    let compileflag .= " -lcv -lhighgui -lcvaux "
+  endif
+  if search("omp\.h") != 0
+    let compileflag .= " -fopenmp "
+  endif
+  if search("math\.h") != 0
+    let compileflag .= " -lm "
+  endif
+  exec compilecmd. " % ".compileflag
+endfunc
+
+func! RunPython()
+  exec "!python %"
+endfunc
+func! CompileJava()
+  exec "!javac %"
+endfunc
+
+func! CompileCode()
+  exec "w"
+  if &filetype == "cpp"
+    exec "call CompileGpp()"
+  elseif &filetype == "c"
+    exec "call CompileGcc()"
+  elseif &filetype == "python"
+    exec "call RunPython()"
+  elseif &filetype == "java"
+    exec "call CompileJava()"
+  endif
+endfunc
+
+func! RunResult()
+  exec "w"
+  if search("mpi\.h") != 0
+    exec "!mpirun -np 4 ./%<"
+  elseif &filetype == "cpp"
+    exec "! ./%:r"
+  elseif &filetype == "c"
+    exec "! ./%:r"
+  elseif &filetype == "python"
+    exec "call RunPython"
+  elseif &filetype == "java"
+    exec "!java %:r"
+  elseif &filetype =="sh"
+    exec "!bash %:p"
+  endif
+endfunc
+
+func! DEBUG()
+  exec "!gdb %:r"
+endfunc
+
+map <F5> :call CompileCode()<CR>
+imap <F5> <ESC>:call CompileCode()<CR>
+vmap <F5> <ESC>:call CompileCode()<CR>
+
+map <F6> :call RunResult()<CR>
+map <F7> :call DEBUG()<CR>
+
+
+"将键盘上的F8功能键映射为添加作者信息的快捷键
+map <F8> ms:call AddAuthor()<cr>'s
+function AddAuthor()
+  let n=1
+  while n < 5
+    let line = getline(n)
+    if line =~'^\s*\*\s*\S*Last\s*modified\s*:\s*\S*.*$'
+      call UpdateTitle()
+      return
+    endif
+    let n = n + 1
+  endwhile
+  call AddTitle()
+endfunction
+
+function UpdateTitle()
+  normal m'
+  execute '/* Last modified\s*:/s@:.*$@\=strftime(": %Y-%m-%d %H:%M")@'
+  normal "
+  normal mk
+  execute '/* Filename\s*:/s@:.*$@\=": ".expand("%:t")@'
+  execute "noh"
+  normal 'k
+  echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+endfunction
+
+function AddTitle()
+  call append(0,"/**********************************************************")
+  call append(1," * Author        : xie keyi")
+  call append(2," * Email         : xiekeyi98@snnu.edu.cn")
+  call append(3," * Last modified : ".strftime("%Y-%m-%d %H:%M"))
+  call append(4," * Filename      : ".expand("%:t"))
+  call append(5," * Description   : ")
+  call append(6," * *******************************************************/")
+  echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+endfunction
+
+" ------------------------ 插件设置  -------------------------------
+
+"将插件文件分开，如果存在可读的.vimrc.bundles文件，把这个文件(插件文件)加载到下面
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+

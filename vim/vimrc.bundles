@@ -1,0 +1,30 @@
+set nocompatible              " 去除VI一致性,必须要添加
+filetype off                  " 必须要添加，让插件判断文件类型
+
+" 设置包括vundle和初始化相关的runtime path
+call plug#begin() "插件安装位置，默认是./.vim，括号内可传入字符串表示位置
+" 请将安装插件的命令放在plug#begin和plug#end之间.
+" Github上的插件
+" 格式为 Plug '用户名/插件仓库名'
+" Plug '插件名称' 实际上是 Plugin 'vim-scripts/插件仓库名' 只是此处的用户名可以省略
+" 由Git支持但不再github上的插件仓库 Plug 'git clone 后面的地址'
+" 本地的Git仓库(例如自己的插件) Plug 'file:///+本地插件仓库绝对路径'
+" 插件在仓库的子目录中.
+
+Plug 'wakatime/vim-wakatime' "记录工作时间插件 
+Plug 'vim-airline/vim-airline' "状态栏插件
+Plug 'vim-airline/vim-airline-themes' "状态栏皮肤
+Plug 'flazz/vim-colorschemes' " 配色合集
+Plug 'rhysd/vim-clang-format' " 代码格式化工具
+Plug 'octol/vim-cpp-enhanced-highlight' "一个C++额外代码高亮插件
+  let c_no_curly_error=1 "修复代码高亮的某个bug
+Plug 'luochen1990/rainbow' " 彩虹括号
+  let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle  开关彩虹括号
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " vim - go 支持保存自动fmt、代码高亮
+Plug 'tpope/vim-fugitive' "git插件
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } "Golang代码补全
+
+call plug#end()            " 必须
+" 忽视插件改变缩进,可以使用以下替代:
+"filetype plugin on
+filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和文件类型相关脚本
