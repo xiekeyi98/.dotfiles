@@ -1,16 +1,15 @@
 # vim
 
+# ln -s ~/.dotfiles/vim ~/.vim
 # Install Plug 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-
-# ln -s ~/.dotfiles/vim ~/.vim
 ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles
 
 # for oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
+chsh -s $(which zsh)
 
 # for config files
 # ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
