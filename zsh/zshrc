@@ -1,14 +1,48 @@
+export ZSH="$HOME/.oh-my-zsh"
+
+POWERLEVEL9K_MODE='nerdfont-complete'
+# ZSH theme
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Powerlevel 10k.
+# Powerlevel 10k elements.
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+    os_icon
+    anaconda
+    host
+    dir
+    vcs
+)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    command_execution_time
+    status
+    load
+    ram
+    background_jobs
+    time
+)
+# Powerlevel 10k appearance.
+
+POWERLEVEL9K_TIME_FORMAT="%D{%Y-%m-%d %H:%M:%S}"
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+# POWERLEVEL9K_HOST_ICON="\uF109 "
+# POWERLEVEL9K_SSH_ICON="\uF489 "
+POWERLEVEL9K_LINUX_ICON="\uF1D7"
+
+
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/xiekeyi/.oh-my-zsh"
+# export ZSH="/home/xiekeyi/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="alanpeabody"
+#ZSH_THEME="alanpeabody"
 
 # Set list of themes to pick from when loading at random
 # Setting this vagoriable when ZSH_THEME=random will cause zsh to load
@@ -112,3 +146,6 @@ export PATH=$PATH:~/go/go/bin:~/dev/bin:
 export GOPATH=/home/xiekeyi/dev
 export GO111MODULE=auto
 export PATH="$PATH:$HOME/.ft"
+
+
+
