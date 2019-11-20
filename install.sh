@@ -16,6 +16,9 @@ echo "Install font please."
 
 chsh -s $(which zsh)
 
+
+echo "screenfetch"
+
 # for config files
 # ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
 # ln -s ~/.dotfiles/config/gitignore_global ~/.gitignore_global
