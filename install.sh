@@ -1,26 +1,36 @@
 # vim
 
-# ln -s ~/.dotfiles/vim ~/.vim
+# ln -s ~/.dotfiles/vim ~/.vim # 应该不需要这个，手动安装用
+ 
 # Install Plug 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
-ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles
+ln -s ~/.dotfiles/vim/vimrc ~/.vimrc # vimrc 软连接过去
+ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles # vimrc 包含该文件，插件配置文件，软连接过去。
 
 # for oh-my-zsh
 ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
-ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
+ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc # zshrc 配置软连接过去
+# 安装 zsh 自动补全插件
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# 安装 pwerleverl10k 插件
 git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 echo "Install font please."
-# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+# 应该不需要，10k 应该可以兼容
+# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k 
 
+
+# 切换 shell 默认为 zsh
 chsh -s $(which zsh)
 
-
+# 提醒安装这两个
 echo "install screenfetch"
 echo "install lshw"
 
 # for config files
 # ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
-# ln -s ~/.dotfiles/config/gitignore_global ~/.gitignore_global
+ln -s ~/.dotfiles/git/gitignore_global ~/.gitignore_global #把 git 全局忽略的文件配过去
 # ln -s ~/.dotfiles/config/ssh ~/.ssh
+
+
+# for git
+git config --global core.excludesfile ~/.gitignore_global # 全局忽略 gitignore_global 里的文件
