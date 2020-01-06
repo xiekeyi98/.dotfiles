@@ -37,7 +37,8 @@ bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
 
 # command alias
-alias grep="grep --color=auto"
+alias grep="grep --color=auto --exclude-dir=.history"
+alias ack="ack --ignore-directory=.history"
 # --------------- tidy below ------------
 source /etc/profile
 # If you come from bash you might have to change your $PATH.
