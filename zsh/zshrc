@@ -150,10 +150,9 @@ export N_PREFIX=/usr/local #node实际安装位置
 export PATH=$N_PREFIX/bin:$PATH
 
 export PATH=$PATH:~/go/go/bin:
-export GOPATH=/home/xiekeyi/dev
+export GOPATH=/home/keyixie/dev
 export PATH=$PATH:~/go/go/bin:~/dev/bin:
-export GOPATH=/home/xiekeyi/dev
-export GO111MODULE=auto
+# export GO111MODULE=auto
 export PATH="$PATH:$HOME/.ft"
 
 

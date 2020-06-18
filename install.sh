@@ -8,7 +8,8 @@ ln -s ~/.dotfiles/vim/vimrc ~/.vimrc # vimrc 软连接过去
 ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles # vimrc 包含该文件，插件配置文件，软连接过去。
 
 # for oh-my-zsh
-ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc # zshrc 配置软连接过去
 # 安装 zsh 自动补全插件
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
