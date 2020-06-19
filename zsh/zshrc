@@ -174,5 +174,5 @@ export PATH=$PATH:~/go/go/bin:~/dev/bin:
 # export GO111MODULE=auto
 export PATH="$PATH:$HOME/.ft"
 
-
-
+export http_proxy=127.0.0.1:12639
+export https_proxy=127.0.0.1:12639

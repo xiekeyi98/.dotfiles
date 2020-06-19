@@ -9,7 +9,9 @@ ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles # vimrc 包含该文件，�
 
 # for oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# 因为 git submoudle 的缘故，直接软链接好像不行，还是安装吧
 # ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
+mv ~/.zshrc ~/.zshrc.bak # 备份原来的
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc # zshrc 配置软连接过去
 # 安装 zsh 自动补全插件
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
