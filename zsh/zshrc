@@ -9,8 +9,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 #Powerlevel 10k.
 
 #Powerlevel 10k elements.
+#
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     os_icon
+    virtualenv
     go_version
     context
     dir
@@ -25,6 +27,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     time
 )
 # Powerlevel 10k appearance.
+VIRTUAL_ENV_DISABLE_PROMPT=1
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_TIME_FORMAT="%D{%Y-%m-%d %H:%M:%S}"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
