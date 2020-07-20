@@ -28,6 +28,7 @@ chsh -s $(which zsh)
 # 提醒安装这两个
 echo "install screenfetch"
 echo "install lshw"
+echo "install git cz"
 
 # for config files
 # ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
