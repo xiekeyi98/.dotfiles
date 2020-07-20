@@ -1,0 +1,16 @@
+[user]
+	name = keyixie
+	email = keyixie@tencent.com
+[core]
+	excludesfile = /home/keyixie/.gitignore_global
+[url "git@git.code.oa.com:"]
+	insteadOf = https://git.code.oa.com/
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[push]
+	default = upstream
+[commit]
+  template = ~/.gitmessage
