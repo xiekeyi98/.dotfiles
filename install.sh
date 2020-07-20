@@ -29,6 +29,7 @@ chsh -s $(which zsh)
 echo "install screenfetch"
 echo "install lshw"
 echo "install git cz"
+# echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 
 # for config files
 # ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
