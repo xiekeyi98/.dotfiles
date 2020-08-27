@@ -29,7 +29,9 @@ chsh -s $(which zsh)
 echo "install screenfetch"
 echo "install lshw"
 echo "install git cz"
+echo "install git  cz-emoji"
 # echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
+# echo '{ "path": "cz-emoji" }' > ~/.czrc
 
 # for config files
 # ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
