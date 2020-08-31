@@ -10,6 +10,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 #Powerlevel 10k elements.
 #
+source /etc/profile
+source $ZSH/oh-my-zsh.sh
+set -o vi
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     os_icon
     virtualenv
@@ -62,7 +65,6 @@ bindkey "\033[4~" end-of-line
 alias grep="grep --color=auto --exclude-dir=\.history"
 alias ack="ack --ignore-directory=\.history"
 # --------------- tidy below ------------
-source /etc/profile
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -138,7 +140,6 @@ git
 zsh-autosuggestions
 )
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
