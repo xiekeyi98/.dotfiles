@@ -143,7 +143,6 @@ zsh-autosuggestions
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-export LANG=zh_CN.UTF-8
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
@@ -179,4 +178,6 @@ export PATH=$PATH:~/go/go/bin:~/dev/bin:
 export PATH="$PATH:$HOME/.ft"
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#source "$HOME/.zprofile"
+export LANG=zh_CN.UTF-8
 
