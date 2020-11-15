@@ -1,4 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
+export LANG=zh_CN.UTF-8
 
 
 # ZSH theme
@@ -174,10 +175,10 @@ export PATH=$N_PREFIX/bin:$PATH
 export PATH=$PATH:~/go/go/bin:
 export GOPATH=/home/keyixie/dev
 export PATH=$PATH:~/go/go/bin:~/dev/bin:
+export PATH=$PATH:~/dev/protobuf/bin
 # export GO111MODULE=auto
 export PATH="$PATH:$HOME/.ft"
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 #source "$HOME/.zprofile"
-export LANG=zh_CN.UTF-8
 
