@@ -13,7 +13,7 @@ set termencoding=utf-8
 set nocompatible "取消和vi的兼容，避免以前的bug和功能
 syntax on "开启代码高亮
 set number "设置行号
-set relativenumber "设置相对行号
+"set relativenumber "设置相对行号
 set showcmd "右下角显示输入命令
 set ruler "显示当前行
 set autoindent "自动缩进

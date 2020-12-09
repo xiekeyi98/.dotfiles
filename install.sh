@@ -6,6 +6,7 @@
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ln -s ~/.dotfiles/vim/vimrc ~/.vimrc # vimrc 软连接过去
 ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles # vimrc 包含该文件，插件配置文件，软连接过去。
+ln -s ~/.dotfiles/others/myclirc ~/.myclirc # mycli
 
 # for oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

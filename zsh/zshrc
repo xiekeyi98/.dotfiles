@@ -78,8 +78,7 @@ alias ack="ack --ignore-directory=\.history"
 # Set list of themes to pick from when loading at random
 # Setting this vagoriable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# If set to an empty array, this variable will have no effect.  # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -138,6 +137,9 @@ git
 zsh-autosuggestions
 )
 
+source /etc/profile
+source $ZSH/oh-my-zsh.sh
+set -o vi # 使用 VIM 模式
 
 # User configuration
 
@@ -145,9 +147,6 @@ zsh-autosuggestions
 
 # You may need to manually set your language environment
 
-source /etc/profile
-source $ZSH/oh-my-zsh.sh
-set -o vi
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -181,4 +180,12 @@ export PATH="$PATH:$HOME/.ft"
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 #source "$HOME/.zprofile"
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+#export https_proxy=http://127.0.0.1:6152
+#export http_proxy=http://127.0.0.1:6152
+#export all_proxy=socks5://127.0.0.1:6153
 
