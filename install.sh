@@ -44,6 +44,8 @@ ln -s ~/.dotfiles/git/gitmessage ~/.gitmessage #把 git 全局忽略的文件配
 # ln -s ~/.dotfiles/config/ssh ~/.ssh
 
 
+# brew cask install qlcolorcode betterzipql qlimagesize // macos 预览
+
 
 # for git
 git config --global core.excludesfile ~/.gitignore_global # 全局忽略 gitignore_global 里的文件

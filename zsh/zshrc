@@ -4,6 +4,7 @@ export LANG=zh_CN.UTF-8
 
 # ZSH theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
+DISABLE_UPDATE_PROMPT=true # 自动更新不提示
 
 # ZSH_THEME SETTINGS
 
