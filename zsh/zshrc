@@ -1,3 +1,4 @@
+#zmodload zsh/zprof # 与末尾的一起食用，性能分析
 export ZSH="$HOME/.oh-my-zsh"
 export LANG=zh_CN.UTF-8
 
@@ -5,6 +6,9 @@ export LANG=zh_CN.UTF-8
 # ZSH theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_UPDATE_PROMPT=true # 自动更新不提示
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50 # 自动补全 超过 50 忽略
+ZSH_AUTOSUGGEST_USE_ASYNC=1 # 开启异步
+
 
 # ZSH_THEME SETTINGS
 
@@ -178,15 +182,19 @@ export PATH=$PATH:~/go/go/bin:~/dev/bin:
 export PATH=$PATH:~/dev/protobuf/bin
 # export GO111MODULE=auto
 export PATH="$PATH:$HOME/.ft"
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" 
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
 #source "$HOME/.zprofile"
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/curl/bin:$PATH"
 
-#export https_proxy=http://127.0.0.1:6152
-#export http_proxy=http://127.0.0.1:6152
-#export all_proxy=socks5://127.0.0.1:6153
+export https_proxy=http://127.0.0.1:6152
+export http_proxy=http://127.0.0.1:6152
+export all_proxy=socks5://127.0.0.1:6153
 
+
+eval $(thefuck --alias)
+
+#zprof # 性能分析
