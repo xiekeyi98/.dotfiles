@@ -22,6 +22,7 @@ set tabstop=2 "设置tab 四个格"
 set expandtab "设 tab 用空格代替"
 set shiftwidth=2 "设置每层缩进数"
 set hlsearch "设置搜索高亮
+"set clipboard=unnamed "设置系统剪贴板
 colorscheme desert "颜色方案
 
 " %表示当前文件名 %:p表示当前文件完整路径
@@ -54,7 +55,7 @@ endfunc
 func! CompileGpp()
   exec "w"
   let compilecmd="!g++ "
-  let compileflag="-g -Wall -std=gnu++11  -o %:r "
+  let compileflag="-g -Wall -std=gnu++17 -o %:r "
   if search("mpi\.h") != 0
     let compilecmd = "!mpic++ "
   endif
