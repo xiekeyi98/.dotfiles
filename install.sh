@@ -45,9 +45,12 @@ ln -s ~/.dotfiles/git/gitmessage ~/.gitmessage #把 git 全局忽略的文件配
 
 
 # brew cask install qlcolorcode betterzipql qlimagesize // macos 预览
+# brew install --cask rectangle // 屏幕调整工具
 
+# install istat menus , alfred , surge , etc..
 
 # for git
 git config --global core.excludesfile ~/.gitignore_global # 全局忽略 gitignore_global 里的文件
+
 
 

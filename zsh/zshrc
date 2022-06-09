@@ -1,4 +1,11 @@
 #zmodload zsh/zprof # 与末尾的一起食用，性能分析
+export GPG_TTY=$(tty)
+export SAVEHIST=1000000 # 历史记录大小
+#export HISTSIZE=100000 # 载入内存的大小
+#setopt HIST_FIND_NO_DUPS # 搜索的时候完全一样的只出现一次
+#setopt INC_APPEND_HISTORY # 立即记录历史文件而不是退出时
+#export HISTTIMEFORMAT="[%F %T] " # 时间戳格式
+#setopt EXTENDED_HISTORY # 记录时间戳
 export ZSH="$HOME/.oh-my-zsh"
 export LANG=zh_CN.UTF-8
 #eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -11,8 +18,6 @@ export LANG=zh_CN.UTF-8
 # ZSH theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_UPDATE_PROMPT=true # 自动更新不提示
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50 # 自动补全 超过 50 忽略
-ZSH_AUTOSUGGEST_USE_ASYNC=1 # 开启异步
 
 
 # ZSH_THEME SETTINGS
@@ -38,6 +43,8 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     time
 )
 # Powerlevel 10k appearance.
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30 # 自动补全 超过 30 忽略
+ZSH_AUTOSUGGEST_USE_ASYNC=1 # 开启异步
 VIRTUAL_ENV_DISABLE_PROMPT=1
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_TIME_FORMAT="%D{%Y-%m-%d %H:%M:%S}"
@@ -180,16 +187,12 @@ set -o vi # 使用 VIM 模式
 #
 
 export PATH=$PATH:~/go/go/bin:~/dev/bin:~/dev/protobuf/bin
-export GOPATH=/home/keyixie/dev
-export PATH=$PATH:~/dev/protobuf/bin
 # export GO111MODULE=auto
-export PATH="/usr/local/opt/curl/bin:$PATH"
-export PATH="/home/keyixie/cmake/cmake-3.21.3-linux-x86_64/bin:$PATH"
+export PATH="$PATH:/usr/local/opt/curl/bin:/home/keyixie/cmake/cmake-3.21.3-linux-x86_64/bin:$GOPATH/bin"
 
 
-export PYENV_HOME=/home/keyixie/.pyenv
-export PATH=/home/keyixie/.ft:/root/.ft:/usr/local/git/bin:$PYENV_HOME/bin:$PATH
-eval "$(pyenv init -)"
+#export PYENV_HOME=/home/keyixie/.pyenv
+#eval "$(pyenv init -)"
 
 
 #export N_PREFIX=/usr/local #node实际安装位置
@@ -202,7 +205,7 @@ eval "$(pyenv init -)"
 #[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-source $HOME/.cargo/env
+#source $HOME/.cargo/env
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 eval $(thefuck --alias)
