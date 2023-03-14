@@ -188,6 +188,7 @@ set -o vi # 使用 VIM 模式
 
 export PATH=$PATH:~/go/go/bin:~/dev/bin:~/dev/protobuf/bin
 # export GO111MODULE=auto
+export GOPATH=/Users/bytedance/projects
 export PATH="$PATH:/usr/local/opt/curl/bin:/home/keyixie/cmake/cmake-3.21.3-linux-x86_64/bin:$GOPATH/bin"
 
 
@@ -208,4 +209,8 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 #source $HOME/.cargo/env
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/bin:${PATH}"
 eval $(thefuck --alias)
+#export PATH="/opt/homebrew/opt/go@1.16/bin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+alias kitex="kitex --thrift reverse_comments"

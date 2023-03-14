@@ -20,9 +20,9 @@ Plug 'octol/vim-cpp-enhanced-highlight' "一个C++额外代码高亮插件
   let c_no_curly_error=1 "修复代码高亮的某个bug
 Plug 'luochen1990/rainbow' " 彩虹括号
   let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle  开关彩虹括号
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " vim - go 支持保存自动fmt、代码高亮
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " vim - go 支持保存自动fmt、代码高亮
 Plug 'tpope/vim-fugitive' "git插件
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } "Golang代码补全
+" Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } "Golang代码补全
 
 call plug#end()            " 必须
 " 忽视插件改变缩进,可以使用以下替代:
