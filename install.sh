@@ -38,7 +38,7 @@ echo "install mycli"
 # echo '{ "path": "cz-emoji" }' > ~/.czrc
 
 # for config files
-# ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
 ln -s ~/.dotfiles/git/gitignore_global ~/.gitignore_global #把 git 全局忽略的文件配过去
 ln -s ~/.dotfiles/git/gitmessage ~/.gitmessage #把 git 全局忽略的文件配过去
 # ln -s ~/.dotfiles/config/ssh ~/.ssh

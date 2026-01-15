@@ -11,9 +11,9 @@ export LANG=zh_CN.UTF-8
 #eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # 把代理提前移动上来，不然更新的时候有问题
-# export https_proxy=http://127.0.0.1:6152
-# export http_proxy=http://127.0.0.1:6152
-# export all_proxy=socks5://127.0.0.1:6153
+#export https_proxy=http://127.0.0.1:6152
+#export http_proxy=http://127.0.0.1:6152
+#export all_proxy=socks5://127.0.0.1:6153
 
 # ZSH theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
