@@ -152,6 +152,7 @@ alias ack="ack --ignore-directory=\.history"
 plugins=(
 git
 zsh-autosuggestions
+#zsh-wakatime
 )
 
 [ -f /etc/profile ] && source /etc/profile
