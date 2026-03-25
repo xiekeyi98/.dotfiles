@@ -38,12 +38,34 @@ echo "==> Setting up Claude Code config..."
 # settings.json
 link_file "$DOTFILES_CLAUDE/settings.json" "$CLAUDE_HOME/settings.json"
 
+# statusline script
+link_file "$DOTFILES_CLAUDE/statusline-command.sh" "$CLAUDE_HOME/statusline-command.sh"
+
 # plugins/known_marketplaces.json
 link_file "$DOTFILES_CLAUDE/known_marketplaces.json" "$CLAUDE_HOME/plugins/known_marketplaces.json"
 
 # custom commands (skills)
 if [ -d "$DOTFILES_CLAUDE/commands" ]; then
     link_file "$DOTFILES_CLAUDE/commands" "$CLAUDE_HOME/commands"
+fi
+
+# Inject editorMode into ~/.claude.json (global state file, not suitable for symlink)
+CLAUDE_JSON="$HOME/.claude.json"
+if command -v jq &>/dev/null; then
+    if [ -f "$CLAUDE_JSON" ]; then
+        if [ "$(jq -r '.editorMode // empty' "$CLAUDE_JSON")" != "vim" ]; then
+            tmp=$(mktemp)
+            jq '.editorMode = "vim"' "$CLAUDE_JSON" > "$tmp" && mv "$tmp" "$CLAUDE_JSON"
+            echo "  [set] editorMode = vim in $CLAUDE_JSON"
+        else
+            echo "  [ok] editorMode already set to vim"
+        fi
+    else
+        echo '{"editorMode":"vim"}' > "$CLAUDE_JSON"
+        echo "  [create] $CLAUDE_JSON with editorMode = vim"
+    fi
+else
+    echo "  [warn] jq not found, skipping editorMode injection"
 fi
 
 echo "==> Done! Claude Code config has been linked."

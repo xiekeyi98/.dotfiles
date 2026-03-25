@@ -105,6 +105,25 @@ copy_template "$DOTFILES/git/gitconfig.local" "$HOME/.gitconfig.local"
 # for git
 git config --global core.excludesfile ~/.gitignore_global # 全局忽略 gitignore_global 里的文件
 
+# for wakatime (shared by vim, VS Code, Claude Code, etc.)
+echo "==> Setting up WakaTime..."
+WAKATIME_CFG="$HOME/.wakatime.cfg"
+if [ -f "$WAKATIME_CFG" ]; then
+    echo "  [ok] $WAKATIME_CFG already exists"
+else
+    printf "  Enter your WakaTime API key (leave empty to skip): "
+    read -r WAKATIME_KEY
+    if [ -n "$WAKATIME_KEY" ]; then
+        cat > "$WAKATIME_CFG" <<EOF
+[settings]
+api_key = $WAKATIME_KEY
+EOF
+        echo "  [create] $WAKATIME_CFG"
+    else
+        echo "  [skip] No API key provided"
+    fi
+fi
+
 # for claude code
 echo "==> Setting up Claude Code..."
 bash "$DOTFILES/claude/install.sh"
