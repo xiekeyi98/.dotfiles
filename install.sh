@@ -1,46 +1,99 @@
-# vim
+#!/bin/bash
+set -e
 
-# ln -s ~/.dotfiles/vim ~/.vim # 应该不需要这个，手动安装用
- 
-# Install Plug 
+DOTFILES="$HOME/.dotfiles"
+
+# 创建 symlink 的辅助函数
+# 如果目标已存在且不是 symlink，先备份；如果已是正确的 symlink，跳过
+link_file() {
+    local src="$1"
+    local dst="$2"
+
+    if [ ! -e "$src" ]; then
+        echo "  [skip] $src not found"
+        return
+    fi
+
+    if [ -L "$dst" ]; then
+        local current_target
+        current_target=$(readlink "$dst")
+        if [ "$current_target" = "$src" ]; then
+            echo "  [ok] $dst already linked"
+            return
+        fi
+        rm "$dst"
+    elif [ -e "$dst" ]; then
+        echo "  [backup] $dst -> ${dst}.bak"
+        mv "$dst" "${dst}.bak"
+    fi
+
+    ln -s "$src" "$dst"
+    echo "  [link] $src -> $dst"
+}
+
+# Copy local config templates (not symlinked — machine-specific, not tracked by git)
+copy_template() {
+    local src="$1"
+    local dst="$2"
+    if [ ! -f "$dst" ]; then
+        cp "$src" "$dst"
+        echo "  [copy] $src -> $dst (edit this for machine-specific config)"
+    else
+        echo "  [ok] $dst already exists, skipping"
+    fi
+}
+
+# Brewfile (macOS only)
+if [[ "$(uname)" == "Darwin" ]] && command -v brew &>/dev/null; then
+    echo "==> Installing Homebrew packages..."
+    brew bundle install --file="$DOTFILES/Brewfile" --no-lock
+fi
+
+# vim
+echo "==> Setting up vim..."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-ln -s ~/.dotfiles/vim/vimrc ~/.vimrc # vimrc 软连接过去
-ln -s ~/.dotfiles/vim/vimrc.bundles ~/.vimrc.bundles # vimrc 包含该文件，插件配置文件，软连接过去。
-ln -s ~/.dotfiles/others/myclirc ~/.myclirc # mycli
+link_file "$DOTFILES/vim/vimrc" "$HOME/.vimrc"
+link_file "$DOTFILES/vim/vimrc.bundles" "$HOME/.vimrc.bundles"
+link_file "$DOTFILES/others/myclirc" "$HOME/.myclirc"
 
 # for oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+echo "==> Setting up oh-my-zsh..."
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
 # 因为 git submoudle 的缘故，直接软链接好像不行，还是安装吧
 # ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
-mv ~/.zshrc ~/.zshrc.bak # 备份原来的
-ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc # zshrc 配置软连接过去
+link_file "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
+copy_template "$DOTFILES/zsh/zshrc.local" "$HOME/.zshrc.local"
 # 安装 zsh 自动补全插件
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+fi
 # 安装 pwerleverl10k 插件
-git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
+    git clone https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+fi
 echo "Install font please."
 # 安装 zsh-syntax-hightlight
 #git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 和 autosugg 兼容不好
 # 应该不需要，10k 应该可以兼容
-# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k 
+# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 
 # 切换 shell 默认为 zsh
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 
-# 提醒安装这两个
-echo "install screenfetch"
-echo "install lshw"
-echo "install git cz"
-echo "install git  cz-emoji"
-echo "install mycli"
+# 以下工具通过 Brewfile 安装 (macOS) 或手动安装 (Linux):
+# screenfetch, lshw, mycli, git cz, git cz-emoji
 # echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
 # echo '{ "path": "cz-emoji" }' > ~/.czrc
 
 # for config files
-ln -s ~/.dotfiles/config/gitconfig ~/.gitconfig
-ln -s ~/.dotfiles/git/gitignore_global ~/.gitignore_global #把 git 全局忽略的文件配过去
-ln -s ~/.dotfiles/git/gitmessage ~/.gitmessage #把 git 全局忽略的文件配过去
+echo "==> Setting up git config..."
+link_file "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
+link_file "$DOTFILES/git/gitignore_global" "$HOME/.gitignore_global"
+link_file "$DOTFILES/git/gitmessage" "$HOME/.gitmessage"
+copy_template "$DOTFILES/git/gitconfig.local" "$HOME/.gitconfig.local"
 # ln -s ~/.dotfiles/config/ssh ~/.ssh
 
 
@@ -52,5 +105,6 @@ ln -s ~/.dotfiles/git/gitmessage ~/.gitmessage #把 git 全局忽略的文件配
 # for git
 git config --global core.excludesfile ~/.gitignore_global # 全局忽略 gitignore_global 里的文件
 
-
-
+# for claude code
+echo "==> Setting up Claude Code..."
+bash "$DOTFILES/claude/install.sh"

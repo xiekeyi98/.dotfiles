@@ -154,7 +154,7 @@ git
 zsh-autosuggestions
 )
 
-source /etc/profile
+[ -f /etc/profile ] && source /etc/profile
 source $ZSH/oh-my-zsh.sh
 set -o vi # 使用 VIM 模式
 
@@ -186,10 +186,18 @@ set -o vi # 使用 VIM 模式
 # export tLC_ALL=en_US.UTF-8  
 #
 
-export PATH=$PATH:~/go/go/bin:~/dev/bin:~/dev/protobuf/bin
+# Go & dev tools
+export GOPATH="$HOME/projects"
+export PATH="$PATH:$HOME/go/go/bin:$HOME/dev/bin:$HOME/dev/protobuf/bin:$GOPATH/bin"
 # export GO111MODULE=auto
-export GOPATH=/Users/bytedance/projects
-export PATH="$PATH:/usr/local/opt/curl/bin:/home/keyixie/cmake/cmake-3.21.3-linux-x86_64/bin:$GOPATH/bin"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS
+    export PATH="$PATH:/usr/local/opt/curl/bin"
+else
+    # Linux
+    export PATH="$PATH:$HOME/cmake/cmake-3.21.3-linux-x86_64/bin"
+fi
 
 
 #export PYENV_HOME=/home/keyixie/.pyenv
@@ -208,9 +216,26 @@ export PATH="$PATH:/usr/local/opt/curl/bin:/home/keyixie/cmake/cmake-3.21.3-linu
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 #source $HOME/.cargo/env
 
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="/opt/homebrew/bin:${PATH}"
-eval $(thefuck --alias)
-#export PATH="/opt/homebrew/opt/go@1.16/bin:$PATH"
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+if [[ "$(uname)" == "Darwin" ]]; then
+    export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+    export PATH="/opt/homebrew/bin:${PATH}"
+    #export PATH="/opt/homebrew/opt/go@1.16/bin:$PATH"
+    export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+fi
+
+# thefuck - 懒加载：首次使用时才初始化，避免每次开终端多花 ~200ms
+# 直接输入 fuck 即可触发，首次会稍慢，之后正常
+if command -v thefuck &>/dev/null; then
+    fuck() {
+        unset -f fuck
+        eval $(thefuck --alias)
+        fuck "$@"
+    }
+fi
+
 alias kitex="kitex --thrift reverse_comments"
+
+export PATH="$PATH:$HOME/.local/bin"
+
+# Load machine-specific config (not tracked by git)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
