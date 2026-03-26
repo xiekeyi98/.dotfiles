@@ -4,6 +4,9 @@
     "type": "command",
     "command": "bash /Users/xiekeyi/.claude/statusline-command.sh"
   },
+  "enabledPlugins": {
+    "claude-code-wakatime@wakatime": true
+  },
   "extraKnownMarketplaces": {
     "wakatime": {
       "source": {
@@ -12,7 +15,5 @@
       }
     }
   },
-  "enabledPlugins": {
-    "claude-code-wakatime@wakatime": true
-  }
+  "effortLevel": "high"
 }
