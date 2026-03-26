@@ -35,11 +35,16 @@ link_file() {
 copy_template() {
     local src="$1"
     local dst="$2"
-    if [ ! -f "$dst" ]; then
+    if [ -f "$dst" ]; then
+        echo "  [ok] $dst already exists, skipping"
+        return
+    fi
+    if [ -f "$src" ]; then
         cp "$src" "$dst"
         echo "  [copy] $src -> $dst (edit this for machine-specific config)"
     else
-        echo "  [ok] $dst already exists, skipping"
+        touch "$dst"
+        echo "  [create] $dst (empty, edit for machine-specific config)"
     fi
 }
 
@@ -64,7 +69,7 @@ fi
 # 因为 git submoudle 的缘故，直接软链接好像不行，还是安装吧
 # ln -s ~/.dotfiles/zsh/oh-my-zsh/ ~/.oh-my-zsh # install oh-my-zsh
 link_file "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
-copy_template "$DOTFILES/zsh/zshrc.local" "$HOME/.zshrc.local"
+copy_template "$DOTFILES/zsh/zshrc.local.template" "$HOME/.zshrc.local"
 # 安装 zsh 自动补全插件
 if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
@@ -93,7 +98,7 @@ echo "==> Setting up git config..."
 link_file "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
 link_file "$DOTFILES/git/gitignore_global" "$HOME/.gitignore_global"
 link_file "$DOTFILES/git/gitmessage" "$HOME/.gitmessage"
-copy_template "$DOTFILES/git/gitconfig.local" "$HOME/.gitconfig.local"
+copy_template "$DOTFILES/git/gitconfig.local.template" "$HOME/.gitconfig.local"
 # ln -s ~/.dotfiles/config/ssh ~/.ssh
 
 

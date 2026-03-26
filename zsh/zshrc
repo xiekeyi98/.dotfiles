@@ -237,7 +237,7 @@ fi
 alias kitex="kitex --thrift reverse_comments"
 
 # OpenClaw Completion
-source "/Users/bytedance/.openclaw/completions/openclaw.zsh"
+[ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"
 
 cc-work() {
   claude --settings "$HOME/.claude/llmbox.json" "$@"
