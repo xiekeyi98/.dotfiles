@@ -8,22 +8,22 @@ input=$(cat)
 ansi()  { printf '\033[%sm' "$1"; }
 reset() { ansi 0; }
 
-# colours
-BLACK="\033[0;30m"
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-YELLOW="\033[0;33m"
-BLUE="\033[0;34m"
-CYAN="\033[0;36m"
-WHITE="\033[0;37m"
-BOLD="\033[1m"
-DIM="\033[2m"
-RST="\033[0m"
+# colours (must use $'...' so \033 becomes a real ESC byte)
+BLACK=$'\033[0;30m'
+RED=$'\033[0;31m'
+GREEN=$'\033[0;32m'
+YELLOW=$'\033[0;33m'
+BLUE=$'\033[0;34m'
+CYAN=$'\033[0;36m'
+WHITE=$'\033[0;37m'
+BOLD=$'\033[1m'
+DIM=$'\033[2m'
+RST=$'\033[0m'
 
 # ── LEFT segments ─────────────────────────────────────────────────────────────
 
 #  os_icon  (Apple NerdFont glyph)
-OS_ICON=$'\uf179'   # \uf179 = Apple logo
+OS_ICON=$'\xEF\x85\xB9'   # U+F179 = Apple logo
 
 #  context  user@host
 USER_NAME=$(whoami)
@@ -34,16 +34,16 @@ CONTEXT="${USER_NAME}@${HOST_NAME}"
 CWD=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
 # Abbreviate $HOME → ~
 HOME_ESC="${HOME//\//\\/}"
-DIR="${CWD/#$HOME/\~}"
+DIR="${CWD/#$HOME/~}"
 
 #  vcs  — git info from cwd
-GIT_ICON=$'\uf1d3'
-STAGED_ICON=$'\uf055'
-UNSTAGED_ICON=$'\uf071'
-UNTRACKED_ICON=$'\uf00d'
-BRANCH_ICON=$'\uf1d3'
-INCOMING_ICON=$'\uf0ab'
-OUTGOING_ICON=$'\uf0aa'
+GIT_ICON=$'\xEF\x87\x93'       # U+F1D3
+STAGED_ICON=$'\xEF\x81\x95'    # U+F055
+UNSTAGED_ICON=$'\xEF\x81\xB1'  # U+F071
+UNTRACKED_ICON=$'\xEF\x80\x8D' # U+F00D
+BRANCH_ICON=$'\xEF\x87\x93'    # U+F1D3
+INCOMING_ICON=$'\xEF\x82\xAB'  # U+F0AB
+OUTGOING_ICON=$'\xEF\x82\xAA'  # U+F0AA
 
 git_segment=""
 if git -C "$CWD" rev-parse --git-dir >/dev/null 2>&1; then
@@ -107,11 +107,11 @@ if [ -n "$WEEK_PCT" ]; then
 fi
 
 #  time  (p10k format: %Y-%m-%d %H:%M:%S)
-TIME_NOW=$(date "+%Y-%m-%d %H:%M:%S")
+TIME_NOW=$(date "+%m-%d %H:%M:%S")
 
 # ── assemble ──────────────────────────────────────────────────────────────────
 # Left side
-LEFT="${BOLD}${WHITE}${OS_ICON}${RST}  ${CYAN}${CONTEXT}${RST}  ${BLUE}${DIR}${RST}"
+LEFT="${BOLD}${WHITE}${OS_ICON}${RST}  ${BLUE}${DIR}${RST}"
 [ -n "$git_segment" ] && LEFT+="  ${git_segment}"
 
 # Right side (space-separated, non-empty parts only)
