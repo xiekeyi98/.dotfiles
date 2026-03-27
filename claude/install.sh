@@ -49,6 +49,11 @@ if [ -d "$DOTFILES_CLAUDE/commands" ]; then
     link_file "$DOTFILES_CLAUDE/commands" "$CLAUDE_HOME/commands"
 fi
 
+# custom skills
+if [ -d "$DOTFILES_CLAUDE/skills" ]; then
+    link_file "$DOTFILES_CLAUDE/skills" "$CLAUDE_HOME/skills"
+fi
+
 # Inject editorMode into ~/.claude.json (global state file, not suitable for symlink)
 CLAUDE_JSON="$HOME/.claude.json"
 if command -v jq &>/dev/null; then
