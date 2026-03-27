@@ -4,17 +4,11 @@
 
 input=$(cat)
 
-# ── helpers ──────────────────────────────────────────────────────────────────
-ansi()  { printf '\033[%sm' "$1"; }
-reset() { ansi 0; }
-
 # colours (must use $'...' so \033 becomes a real ESC byte)
-BLACK=$'\033[0;30m'
 RED=$'\033[0;31m'
 GREEN=$'\033[0;32m'
 YELLOW=$'\033[0;33m'
 BLUE=$'\033[0;34m'
-CYAN=$'\033[0;36m'
 WHITE=$'\033[0;37m'
 BOLD=$'\033[1m'
 DIM=$'\033[2m'
@@ -25,19 +19,19 @@ RST=$'\033[0m'
 #  os_icon  (Apple NerdFont glyph)
 OS_ICON=$'\xEF\x85\xB9'   # U+F179 = Apple logo
 
-#  context  user@host
-USER_NAME=$(whoami)
-HOST_NAME=$(hostname -s)
-CONTEXT="${USER_NAME}@${HOST_NAME}"
-
-#  dir
-CWD=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
-# Abbreviate $HOME → ~
-HOME_ESC="${HOME//\//\\/}"
+#  dir, model, context window, rate limits — single jq pass
+IFS=$'\t' read -r CWD MODEL USED_PCT FIVE_PCT WEEK_PCT < <(
+  echo "$input" | jq -r '[
+    (.workspace.current_dir // .cwd),
+    (.model.display_name // .model.id // "Claude"),
+    (.context_window.used_percentage // ""),
+    (.rate_limits.five_hour.used_percentage // ""),
+    (.rate_limits.seven_day.used_percentage // "")
+  ] | @tsv'
+)
 DIR="${CWD/#$HOME/~}"
 
 #  vcs  — git info from cwd
-GIT_ICON=$'\xEF\x87\x93'       # U+F1D3
 STAGED_ICON=$'\xEF\x81\x95'    # U+F055
 UNSTAGED_ICON=$'\xEF\x81\xB1'  # U+F071
 UNTRACKED_ICON=$'\xEF\x80\x8D' # U+F00D
@@ -49,12 +43,16 @@ git_segment=""
 if git -C "$CWD" rev-parse --git-dir >/dev/null 2>&1; then
     BRANCH=$(git -C "$CWD" symbolic-ref --short HEAD 2>/dev/null || git -C "$CWD" rev-parse --short HEAD 2>/dev/null)
 
-    # count staged / unstaged / untracked
-    STAGED=$(git -C "$CWD" diff --no-lock-index --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
-    UNSTAGED=$(git -C "$CWD" diff --no-lock-index --name-only 2>/dev/null | wc -l | tr -d ' ')
-    UNTRACKED=$(git -C "$CWD" ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
-    INCOMING=$(git -C "$CWD" rev-list --no-walk --count @{u}..HEAD 2>/dev/null || echo 0)
-    OUTGOING=$(git -C "$CWD" rev-list --no-walk --count HEAD..@{u} 2>/dev/null || echo 0)
+    # count staged / unstaged / untracked via single git status
+    STAGED=0; UNSTAGED=0; UNTRACKED=0
+    while IFS= read -r line; do
+        [[ "$line" == '?? '* ]] && (( UNTRACKED++ )) && continue
+        [[ "${line:0:1}" != ' ' && "${line:0:1}" != '?' ]] && (( STAGED++ ))
+        [[ "${line:1:1}" != ' ' && "${line:1:1}" != '?' ]] && (( UNSTAGED++ ))
+    done < <(git -C "$CWD" status --porcelain 2>/dev/null)
+
+    # ahead/behind in single rev-list call
+    read -r INCOMING OUTGOING < <(git -C "$CWD" rev-list --left-right --count @{u}...HEAD 2>/dev/null || echo "0 0")
 
     # pick colour: modified > untracked > clean
     if [ "$UNSTAGED" -gt 0 ] || [ "$STAGED" -gt 0 ]; then
@@ -78,11 +76,7 @@ fi
 
 # ── RIGHT segments ────────────────────────────────────────────────────────────
 
-#  model
-MODEL=$(echo "$input" | jq -r '.model.display_name // .model.id // "Claude"')
-
 #  context window usage
-USED_PCT=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 if [ -n "$USED_PCT" ]; then
     USED_INT=$(printf '%.0f' "$USED_PCT")
     if   [ "$USED_INT" -ge 80 ]; then CTX_COLOR="$RED"
@@ -96,8 +90,6 @@ fi
 
 #  rate limits (Claude.ai subscription)
 RATE_SEGMENT=""
-FIVE_PCT=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
-WEEK_PCT=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 if [ -n "$FIVE_PCT" ]; then
     RATE_SEGMENT+="${DIM}5h:$(printf '%.0f' "$FIVE_PCT")%${RST}"
 fi
@@ -106,7 +98,7 @@ if [ -n "$WEEK_PCT" ]; then
     RATE_SEGMENT+="${DIM}7d:$(printf '%.0f' "$WEEK_PCT")%${RST}"
 fi
 
-#  time  (p10k format: %Y-%m-%d %H:%M:%S)
+#  time
 TIME_NOW=$(date "+%m-%d %H:%M:%S")
 
 # ── assemble ──────────────────────────────────────────────────────────────────
