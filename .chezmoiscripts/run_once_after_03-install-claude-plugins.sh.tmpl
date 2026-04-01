@@ -1,6 +1,10 @@
 #!/bin/bash
-{{ if lookPath "claude" -}}
+{{ if and (lookPath "claude") .installClaudeCode -}}
 echo "==> Installing Claude Code plugins..."
+
+# Add marketplaces
+claude plugin marketplace add superpowers-marketplace --source github --repo obra/superpowers-marketplace 2>/dev/null || true
+claude plugin marketplace add wakatime --source git --url https://github.com/wakatime/claude-code-wakatime.git 2>/dev/null || true
 
 # Update marketplace cache
 claude plugin marketplace update 2>/dev/null || true
