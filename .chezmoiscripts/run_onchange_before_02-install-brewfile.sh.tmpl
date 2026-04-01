@@ -1,8 +1,43 @@
 #!/bin/bash
 {{ if eq .chezmoi.os "darwin" -}}
 # Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# isWork: {{ .isWork }}
 if command -v brew &>/dev/null; then
     echo "==> Installing Homebrew packages..."
-    brew bundle install --file="{{ .chezmoi.sourceDir }}/Brewfile"
+
+    TMPFILE=$(mktemp)
+    trap 'rm -f "$TMPFILE"' EXIT
+
+    cat > "$TMPFILE" << 'BREWFILE'
+# CLI tools
+brew "thefuck"
+brew "mycli"
+brew "fastfetch"
+brew "git-lfs"
+brew "vim"
+brew "git"
+brew "go"
+
+# cask apps
+cask "1password"
+cask "alfred"
+cask "istat-menus"
+cask "mos"
+cask "visual-studio-code"
+
+# fonts
+cask "font-cascadia-code"
+BREWFILE
+
+{{ if not .isWork -}}
+    cat >> "$TMPFILE" << 'BREWFILE'
+
+# Personal machine only
+cask "surge"
+cask "keka"
+BREWFILE
+{{ end -}}
+
+    brew bundle install --no-upgrade --file="$TMPFILE"
 fi
 {{ end -}}
