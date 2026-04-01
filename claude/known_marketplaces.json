@@ -1,18 +1,20 @@
 {
+  "superpowers-marketplace": {
+    "source": {
+      "source": "github",
+      "repo": "obra/superpowers-marketplace"
+    }
+  },
   "claude-plugins-official": {
     "source": {
       "source": "github",
       "repo": "anthropics/claude-plugins-official"
-    },
-    "installLocation": "/Users/xiekeyi/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2026-03-27T05:49:17.991Z"
+    }
   },
   "wakatime": {
     "source": {
       "source": "git",
       "url": "https://github.com/wakatime/claude-code-wakatime.git"
-    },
-    "installLocation": "/Users/xiekeyi/.claude/plugins/marketplaces/wakatime",
-    "lastUpdated": "2026-03-25T16:10:50.072Z"
+    }
   }
 }
