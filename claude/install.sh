@@ -73,4 +73,29 @@ else
     echo "  [warn] jq not found, skipping editorMode injection"
 fi
 
+# Install plugins (requires claude CLI)
+if command -v claude &>/dev/null; then
+    echo "==> Installing Claude Code plugins..."
+    # Strip machine-specific fields (installLocation, lastUpdated) from known_marketplaces.json
+    # These are runtime state that 'marketplace update' will regenerate with correct local paths
+    if [ -f "$CLAUDE_HOME/plugins/known_marketplaces.json" ]; then
+        tmp=$(mktemp)
+        jq 'to_entries | map(.value |= {source: .source}) | from_entries' \
+            "$CLAUDE_HOME/plugins/known_marketplaces.json" > "$tmp" && \
+            mv "$tmp" "$CLAUDE_HOME/plugins/known_marketplaces.json"
+    fi
+    claude plugin marketplace update 2>/dev/null || true
+    # Install enabled plugins from settings
+    for plugin in $(jq -r '.enabledPlugins // {} | keys[]' "$DOTFILES_CLAUDE/settings.json" 2>/dev/null); do
+        if claude plugin list 2>/dev/null | grep -q "$plugin"; then
+            echo "  [ok] $plugin already installed"
+        else
+            echo "  [install] $plugin"
+            claude plugin install "$plugin" 2>/dev/null || echo "  [warn] failed to install $plugin"
+        fi
+    done
+else
+    echo "  [skip] claude CLI not found, install plugins manually"
+fi
+
 echo "==> Done! Claude Code config has been linked."
