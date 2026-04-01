@@ -5,8 +5,11 @@
 ## 全新安装（一行命令）
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply xiekeyi98/.dotfiles
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --branch chezmoi xiekeyi98/.dotfiles
 ```
+
+> **注意**：必须指定 `--branch chezmoi`，因为仓库默认分支是 master（旧结构）。
+> 如果你已将 GitHub 默认分支改为 chezmoi，则可省略 `--branch` 参数。
 
 会自动：安装 chezmoi → 克隆仓库 → 交互式配置（name/email/是否工作机） → 安装软件 → 部署配置。
 
