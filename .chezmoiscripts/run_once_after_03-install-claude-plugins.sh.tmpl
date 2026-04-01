@@ -1,5 +1,5 @@
 #!/bin/bash
-{{ if and (lookPath "claude") .installClaudeCode -}}
+{{ if and (lookPath "claude") (dig "installClaudeCode" false .) -}}
 echo "==> Installing Claude Code plugins..."
 
 # Add marketplaces
