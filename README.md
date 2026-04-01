@@ -76,6 +76,6 @@ chezmoi forget ~/.myclirc
 - **Shell**: zsh + oh-my-zsh + powerlevel10k + zsh-autosuggestions
 - **Editor**: vim (vim-plug) + VSCode (vim 模式)
 - **Git**: conventional commit 模板, git-lfs
-- **CLI**: thefuck, mycli, screenfetch
+- **CLI**: thefuck, mycli, fastfetch
 - **AI**: Claude Code (WakaTime 插件, p10k 风格状态栏, 多 marketplace)
 - **管理**: chezmoi + 1Password CLI (密钥管理)
