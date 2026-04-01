@@ -1,0 +1,7 @@
+#!/bin/bash
+{{ if lookPath "zsh" -}}
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "==> Setting zsh as default shell..."
+    chsh -s "$(which zsh)"
+fi
+{{ end -}}

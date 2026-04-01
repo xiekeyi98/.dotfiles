@@ -1,0 +1,8 @@
+# Machine-specific git config (not managed by chezmoi)
+# Override user, add url rewrites, credentials, etc.
+#
+# [user]
+#     name = Your Name
+#     email = your@email.com
+# [url "git@github.com:"]
+#     insteadOf = https://github.com/

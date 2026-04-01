@@ -1,0 +1,12 @@
+{{- $name := promptStringOnce . "name" "Git user.name" -}}
+{{- $email := promptStringOnce . "email" "Git user.email" -}}
+{{- $isWork := promptBoolOnce . "isWork" "Is this a work machine" -}}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    isWork = {{ $isWork }}
+
+[onepassword]
+    command = "op"
+    prompt = true

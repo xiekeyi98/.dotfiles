@@ -1,0 +1,10 @@
+#!/bin/bash
+# Inject editorMode into ~/.claude.json without destroying other keys
+input=$(cat)
+if [ -z "$input" ]; then
+    echo '{"editorMode":"vim"}'
+elif command -v jq &>/dev/null; then
+    echo "$input" | jq '.editorMode = "vim"'
+else
+    echo "$input"
+fi

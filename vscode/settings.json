@@ -1,0 +1,182 @@
+{
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "'Cascadia Code PL' ,Menlo, Monaco, 'Courier New', monospace,'MesloLGS NF','Apple Color Emoji'",
+    "vim.statusBarColorControl": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#005f5f",
+        "statusBar.noFolderBackground": "#005f5f",
+        "statusBar.debuggingBackground": "#005f5f"
+    },
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.iconTheme": "vscode-icons",
+    "extensions.autoUpdate": true,
+    "terminal.integrated.fontFamily": "'Cascadia Code PL',Menlo, Monaco, 'Courier New', monospace,'MesloLGS NF'",
+    "zenMode.hideTabs": false,
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<Tab>",
+                "d" // 跳转定义
+            ],
+            "commands": [
+                "editor.action.peekDefinition"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "D" // 转到定义
+            ],
+            "commands": [
+                "editor.action.revealDefinition"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "r" // 查看引用
+            ],
+            "commands": [
+                "editor.action.referenceSearch.trigger"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "R" // 查看引用
+            ],
+            "commands": [
+                "editor.action.goToReferences"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "t" // 速览定义
+            ],
+            "commands": [
+                "editor.action.peekTypeDefinition"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "T" // 转到定义
+            ],
+            "commands": [
+                "editor.action.goToTypeDefinition"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "b" // 后退
+            ],
+            "commands": [
+                "workbench.action.navigateBack"
+            ]
+        },
+        {
+            "before": [
+                "<Tab>",
+                "f" // 前进
+            ],
+            "commands": [
+                "workbench.action.navigateForward"
+            ]
+        },
+    ],
+    "terminal.integrated.fontSize": 15,
+    "editor.fontSize": 16,
+    "debug.console.fontSize": 15,
+    "rest-client.logLevel": "info",
+    "rest-client.previewOption": "exchange",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "cSpell.language": "en,en-US",
+    "cSpell.enableFiletypes": [
+        "http"
+    ],
+    "workbench.colorTheme": "One Dark Pro",
+    "go.useLanguageServer": true,
+    "gitlens.codeLens.scopes": [
+        "document",
+        "containers"
+    ],
+    "markdown.extension.tableFormatter.normalizeIndentation": true,
+    "editor.tokenColorCustomizations": null,
+    "vim.insertModeKeyBindings": [],
+    "go.toolsManagement.autoUpdate": true,
+    "plantuml.exportConcurrency": 4,
+    "editor.cursorStyle": "line",
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "off",
+    "editor.detectIndentation": false,
+    "editor.codeActionsOnSave": null,
+    "security.workspace.trust.untrustedFiles": "open",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.message.warning.show": false,
+    "latex-workshop.message.error.show": false,
+    "latex-workshop.latex.tools": [
+        {
+            // 编译工具和命令
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "go.formatFlags": [
+        "-s"
+    ],
+    "editor.largeFileOptimizations": false,
+    "editor.inlineSuggest.enabled": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "terminal.external.osxExec": "iterm",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "workbench.startupEditor": "none",
+    "cSpell.languageSettings": [],
+    "git-graph.maxDepthOfRepoSearch": 2,
+    "go.goroot": "/opt/homebrew/Cellar/go/1.18.3/libexec",
+    "go.delveConfig": {
+        "apiVersion": 2,
+    },
+    "git.timeline.showUncommitted": true,
+    "git-graph.date.format": "ISO Date & Time",
+    "gitlens.defaultDateLocale": null,
+    "gitlens.defaultDateFormat": "YY-MM-DD HH:mm",
+    "gitlens.defaultDateStyle": "absolute",
+    "editor.formatOnSave": true,
+    "[go]": {
+        "editor.formatOnSaveMode": "file",
+    },
+    "files.autoSave": "onFocusChange",
+    "go.lintTool": "golangci-lint",
+    "editor.formatOnSaveMode": "file",
+    "terminal.integrated.enableMultiLinePasteWarning": false
+}

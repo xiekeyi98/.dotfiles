@@ -1,0 +1,16 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+[core]
+	excludesfile = ~/.gitignore_global
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[push]
+	default = upstream
+[commit]
+	template = ~/.gitmessage
+[include]
+	path = ~/.gitconfig.local
