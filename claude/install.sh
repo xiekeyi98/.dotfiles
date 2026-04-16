@@ -1,11 +1,29 @@
 #!/bin/bash
 # Claude Code dotfiles installer
 # Usage: bash ~/.dotfiles/claude/install.sh
+#
+# Skill separation policy (this repo is PUBLIC):
+#   - Public/personal skills   -> ~/.dotfiles/claude/skills/  (tracked in git)
+#   - Private/internal skills  -> $PRIVATE_SKILLS             (never tracked; provisioned by your org's tooling)
+#   - Names matching $PRIVATE_SKILL_RE are refused under dotfiles to prevent accidental leakage.
+#   - ~/.claude/skills/ is a real directory with per-skill symlinks from both sources
+#     (dotfiles takes precedence on name collision).
+#
+# Machine-local overrides: if ~/.dotfiles/claude/install.local.sh exists it is sourced
+# before skill linking — put any org-specific PRIVATE_SKILLS path or PRIVATE_SKILL_RE
+# pattern there (it is gitignored).
 
 set -e
 
 DOTFILES_CLAUDE="$HOME/.dotfiles/claude"
 CLAUDE_HOME="$HOME/.claude"
+
+# Defaults — override in install.local.sh on machines that have a private skills source.
+PRIVATE_SKILLS=""
+PRIVATE_SKILL_RE='^(private-.*|internal-.*)$'
+
+LOCAL_OVERRIDES="$DOTFILES_CLAUDE/install.local.sh"
+[ -f "$LOCAL_OVERRIDES" ] && source "$LOCAL_OVERRIDES"
 
 # 确保 ~/.claude 目录存在
 mkdir -p "$CLAUDE_HOME"
@@ -49,9 +67,42 @@ if [ -d "$DOTFILES_CLAUDE/commands" ]; then
     link_file "$DOTFILES_CLAUDE/commands" "$CLAUDE_HOME/commands"
 fi
 
-# custom skills
+# custom skills — real directory with per-skill symlinks (not a whole-dir symlink)
+# so private skills from an external source can coexist with personal ones from dotfiles
+# without leaking private skills into this public repo.
+if [ -L "$CLAUDE_HOME/skills" ]; then
+    rm "$CLAUDE_HOME/skills"
+    echo "  [unlink] $CLAUDE_HOME/skills (was whole-dir symlink, switching to per-skill)"
+fi
+mkdir -p "$CLAUDE_HOME/skills"
+
+# 1) Public/personal skills from dotfiles — with name guardrail
 if [ -d "$DOTFILES_CLAUDE/skills" ]; then
-    link_file "$DOTFILES_CLAUDE/skills" "$CLAUDE_HOME/skills"
+    for skill in "$DOTFILES_CLAUDE/skills"/*; do
+        [ -e "$skill" ] || continue
+        name=$(basename "$skill")
+        if [[ "$name" =~ $PRIVATE_SKILL_RE ]]; then
+            echo "  [REFUSE] $name matches PRIVATE_SKILL_RE — do NOT put it under dotfiles (public repo)."
+            echo "           Move it to \$PRIVATE_SKILLS and remove from dotfiles."
+            continue
+        fi
+        link_file "$skill" "$CLAUDE_HOME/skills/$name"
+    done
+fi
+
+# 2) Private skills from $PRIVATE_SKILLS (configured via install.local.sh). Dotfiles wins on collision.
+if [ -n "$PRIVATE_SKILLS" ] && [ -d "$PRIVATE_SKILLS" ]; then
+    for skill in "$PRIVATE_SKILLS"/*; do
+        [ -e "$skill" ] || continue
+        name=$(basename "$skill")
+        if [ -e "$CLAUDE_HOME/skills/$name" ] && [ ! -L "$CLAUDE_HOME/skills/$name" ]; then
+            echo "  [skip] $name exists as real file/dir in ~/.claude/skills/, not overwriting"
+            continue
+        fi
+        link_file "$skill" "$CLAUDE_HOME/skills/$name"
+    done
+elif [ -n "$PRIVATE_SKILLS" ]; then
+    echo "  [info] PRIVATE_SKILLS=$PRIVATE_SKILLS not found — skipping"
 fi
 
 # Inject editorMode into ~/.claude.json (global state file, not suitable for symlink)

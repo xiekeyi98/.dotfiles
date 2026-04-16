@@ -1,3 +1,4 @@
 zsh/zshrc.local
 git/gitconfig.local
 .claude/
+claude/install.local.sh
