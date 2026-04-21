@@ -3,3 +3,14 @@ LICENSE
 Brewfile
 macos/**
 vscode/**
+
+# Claude Code runtime state — machine-specific, not config
+.claude/plugins/**
+.claude/projects/**
+.claude/todos/**
+.claude/sessions/**
+.claude/statsig/**
+.claude/shell-snapshots/**
+.claude/ide/**
+.claude/history.jsonl
+.claude/settings.local.json
