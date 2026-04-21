@@ -6,6 +6,9 @@ vscode/**
 
 # Claude Code runtime state — machine-specific, not config
 .claude/plugins/**
+!.claude/plugins/
+!.claude/plugins/claude-hud/
+!.claude/plugins/claude-hud/config.json
 .claude/projects/**
 .claude/todos/**
 .claude/sessions/**
