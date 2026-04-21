@@ -1,1 +1,11 @@
 .claude/
+
+# Defense-in-depth: never commit work-private skill payloads into this PUBLIC repo.
+# Work / org-provisioned skills live at ~/.agents/skills/ on the machine and are
+# symlinked into ~/.claude/skills/ by run_after_04-link-private-skills.sh.
+private_dot_claude/skills/bytedcli/
+private_dot_claude/skills/lark-*/
+private_dot_claude/skills/byted-*/
+private_dot_claude/skills/feishu-*/
+private_dot_claude/skills/private-*/
+private_dot_claude/skills/internal-*/
