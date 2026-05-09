@@ -254,7 +254,15 @@ cc-personal() {
       claude "$@"
 }
 
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+
+# Prefer GitHub CLI from ~/.local/bin even if some other `gh` sits earlier in PATH.
+[ -x "$HOME/.local/bin/gh" ] && alias gh="$HOME/.local/bin/gh"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Load machine-specific config (not tracked by git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
