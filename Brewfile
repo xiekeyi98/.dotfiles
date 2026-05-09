@@ -1,3 +1,6 @@
+# Taps
+tap "oven-sh/bun"
+
 # CLI tools
 brew "thefuck"
 brew "mycli"
@@ -6,6 +9,7 @@ brew "git-lfs"
 brew "vim"
 brew "git"
 brew "go"
+brew "oven-sh/bun/bun" # runtime for the claude-hud statusline
 
 # cask apps
 cask "1password"
