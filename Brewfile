@@ -17,7 +17,7 @@ cask "visual-studio-code"
 cask "keka"
 
 # fonts
-cask "font-cascadia-code"
+cask "font-cascadia-code-nf"
 
 # Quick Look plugins
 # cask "qlcolorcode"
