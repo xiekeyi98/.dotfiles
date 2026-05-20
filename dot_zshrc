@@ -259,6 +259,18 @@ export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 # Prefer GitHub CLI from ~/.local/bin even if some other `gh` sits earlier in PATH.
 [ -x "$HOME/.local/bin/gh" ] && alias gh="$HOME/.local/bin/gh"
 
+# codex-hud alias
+CODEX_HUD_HOME="$HOME/.local/share/codex-hud"
+if [ -x "$CODEX_HUD_HOME/bin/codex-hud" ]; then
+    alias codex="$CODEX_HUD_HOME/bin/codex-hud"
+    alias codex-resume="$CODEX_HUD_HOME/bin/codex-hud resume"
+    alias codex-hud="$CODEX_HUD_HOME/bin/codex-hud"
+    alias codex-hud-install="$CODEX_HUD_HOME/bin/codex-hud-install"
+    alias codex-hud-sync="$CODEX_HUD_HOME/bin/codex-hud-sync"
+    alias codex-hud-upgrade="$CODEX_HUD_HOME/bin/codex-hud-upgrade"
+    alias codex-hud-uninstall="$CODEX_HUD_HOME/bin/codex-hud-uninstall"
+fi
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
