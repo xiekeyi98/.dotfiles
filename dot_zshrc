@@ -254,9 +254,9 @@ cc-personal() {
       claude "$@"
 }
 
-export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
-# Prefer GitHub CLI from ~/.local/bin even if some other `gh` sits earlier in PATH.
+# Prefer user-installed tools, including GitHub CLI, over system shims.
 [ -x "$HOME/.local/bin/gh" ] && alias gh="$HOME/.local/bin/gh"
 
 # bun
